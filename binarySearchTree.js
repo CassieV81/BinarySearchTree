@@ -94,6 +94,29 @@ class BinarySearchTree {
         
     }
 
+    find(value) {
+
+        if (this.root === null) return null
+        let valueNode;
+        let currentNode = this.root;
+        if (currentNode.data === value) return valueNode = currentNode;
+        while (true) {
+            if (value < currentNode.data) {
+                if (!currentNode.left) return null;
+                if (currentNode.left.data === value) {
+                    return valueNode = currentNode.left;
+                }
+                currentNode = currentNode.left;
+            } else {
+                if (!currentNode.right) return null;
+                if (currentNode.right.data === value) {
+                    return valueNode = currentNode.right;
+                }
+                currentNode = currentNode.right;
+            }
+        }
+    }
+
     preOrder(node) {
         if (node === null) return null;
 
@@ -148,7 +171,7 @@ bst.insert(6)
 bst.insert(25)
 prettyPrint(node)
 
-// const ord = bst.inOrder(node);
-// console.log(ord);
+const ord = bst.find(0);
+console.log(ord);
 // console.log(node);
-prettyPrint(bst.delete(7))
+prettyPrint(ord)
