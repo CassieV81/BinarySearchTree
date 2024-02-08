@@ -50,6 +50,13 @@ class BinarySearchTree {
         this.array = [];
     }
 
+    buildTree(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            this.insert(arr[i]);
+        }
+        return this.root
+    }
+
     insert(value) {
         const newNode = new Node(value);
         
@@ -76,11 +83,15 @@ class BinarySearchTree {
         }
     }
 
-    buildTree(arr) {
+    delete(value) {
+        let arr = this.preOrder(this.root);
+        this.root = null;
         for (let i = 0; i < arr.length; i++) {
+            if (value === arr[i]) continue;
             this.insert(arr[i]);
         }
         return this.root
+        
     }
 
     preOrder(node) {
@@ -135,6 +146,9 @@ bst.insert(50)
 bst.insert(0)
 bst.insert(6)
 bst.insert(25)
-const ord = bst.inOrder(node);
-console.log(ord);
-// prettyPrint(node)
+prettyPrint(node)
+
+// const ord = bst.inOrder(node);
+// console.log(ord);
+// console.log(node);
+prettyPrint(bst.delete(7))
