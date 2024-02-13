@@ -67,6 +67,7 @@ class BinarySearchTree {
         
         let currentNode = this.root;
         while (true) {
+            // if (value === currentNode.data) break;
             if (value < currentNode.data) {
                 if (!currentNode.left) {
                     currentNode.left = newNode;
@@ -117,6 +118,18 @@ class BinarySearchTree {
         }
     }
 
+    levelOrder(node) {
+        if (node === null) return null;
+        let arr = [node];
+        while (arr.length > 0) {
+            node = arr.shift();
+            this.array.push(node.data);
+            if (node.left !== null) arr.push(node.left);
+            if (node.right !== null) arr.push(node.right);
+        }
+        return this.array;
+    }
+
     preOrder(node) {
         if (node === null) return null;
 
@@ -146,6 +159,10 @@ class BinarySearchTree {
         
         return this.array;
     }
+
+    height(node) {
+        
+    }
     
 }
 
@@ -171,7 +188,7 @@ bst.insert(6)
 bst.insert(25)
 prettyPrint(node)
 
-const ord = bst.find(0);
+const ord = bst.levelOrder(node);
 console.log(ord);
 // console.log(node);
-prettyPrint(ord)
+// prettyPrint(ord)
