@@ -93,7 +93,8 @@ class BinarySearchTree {
         
         let currentNode = this.root;
         while (true) {
-            if (value === currentNode.data) break;
+            // Uncomment below to remove double values while creating Nodes
+            // if (value === currentNode.data) break;
             if (value < currentNode.data) {
                 if (!currentNode.left) {
                     currentNode.left = newNode;
@@ -158,6 +159,7 @@ class BinarySearchTree {
     }
 
     levelOrder(node) {
+        this.array = [];
         if (node === null) return null;
         let arr = [node];
         while (arr.length > 0) {
@@ -169,31 +171,37 @@ class BinarySearchTree {
         return this.array;
     }
 
-    preOrder(node) {
+    preOrder(node, isFirstCall=true) {
         if (node === null) return null;
 
+        if (isFirstCall) this.array = [];
+
         this.array.push(node.data);
-        this.preOrder(node.left);
-        this.preOrder(node.right);
+        this.preOrder(node.left, false);
+        this.preOrder(node.right, false);
 
         return this.array
     }
 
-    inOrder(node) {
+    inOrder(node, isFirstCall=true) {
         if (node === null) return null;
 
-        this.inOrder(node.left);
+        if (isFirstCall) this.array = [];
+
+        this.inOrder(node.left, false);
         this.array.push(node.data);
-        this.inOrder(node.right);
+        this.inOrder(node.right, false);
         
         return this.array;
     }
 
-    postOrder(node) {
+    postOrder(node, isFirstCall=true) {
         if (node === null) return null;
 
-        this.postOrder(node.left);
-        this.postOrder(node.right);
+        if (isFirstCall) this.array = [];
+
+        this.postOrder(node.left, false);
+        this.postOrder(node.right, false);
         this.array.push(node.data);
         
         return this.array;
@@ -246,17 +254,28 @@ class BinarySearchTree {
 
 
 const bst = new BinarySearchTree();
-const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+const arr = [...Array(100)].map(() => Math.floor(Math.random() * 100))
+console.log(arr)
+console.log(bst.array)
 const node = bst.buildTree(arr);
-bst.insert(50)
-bst.insert(0)
-bst.insert(6)
-bst.insert(25)
-bst.prettyPrint(node)
+// bst.insert(50)
+// bst.insert(0)
+// bst.insert(6)
+// bst.insert(25)
+// bst.prettyPrint(node)
+console.log(bst.levelOrder(node))
+console.log(bst.preOrder(node))
+console.log(bst.inOrder(node))
+console.log(bst.postOrder(node))
 
 console.log(`isBalanced: ${bst.isBalanced(node)}`);
 let newNode = bst.reBalance(node);
 console.log(`isBalanced: ${bst.isBalanced(newNode)}`);
+// bst.prettyPrint(newNode)
+console.log(bst.levelOrder(newNode))
+console.log(bst.preOrder(newNode))
+console.log(bst.inOrder(newNode))
+console.log(bst.postOrder(newNode))
 
 // const ord = bst.inOrder(node);
 // console.log(ord);
