@@ -57,6 +57,32 @@ class BinarySearchTree {
         return this.root
     }
 
+    buildBalancedTree(arr) {
+        
+        arr.sort((a, b) => a - b);
+        if (arr.length === 0) return null;
+        let midde = Math.floor(arr.length / 2);
+
+        this.root = new Node(arr[midde]);
+        const queue = [[this.root, [0, midde - 1]], [this.root, [midde + 1, arr.length - 1]]]
+        
+        while (queue.length > 0) {
+            const [parent, [left, right]] = queue.shift();
+            if (left <= right && parent != null) {
+                const mid = Math.floor((left + right)/2);
+                const child = new Node(arr[mid]);
+                if (arr[mid] < parent.data) {
+                    parent.left = child;
+                } else {
+                    parent.right = child
+                }
+                queue.push([child, [left, mid - 1]]);
+                queue.push([child, [mid + 1, right]]);
+            }
+        }
+        return this.root;
+    }
+
     insert(value) {
         const newNode = new Node(value);
         
@@ -67,7 +93,7 @@ class BinarySearchTree {
         
         let currentNode = this.root;
         while (true) {
-            // if (value === currentNode.data) break;
+            if (value === currentNode.data) break;
             if (value < currentNode.data) {
                 if (!currentNode.left) {
                     currentNode.left = newNode;
@@ -188,7 +214,11 @@ bst.insert(6)
 bst.insert(25)
 prettyPrint(node)
 
-const ord = bst.levelOrder(node);
+const ord = bst.inOrder(node);
 console.log(ord);
-// console.log(node);
-// prettyPrint(ord)
+const node1 = bst.buildTree(ord)
+console.log(node1);
+prettyPrint(node1)
+const node2 = bst.buildBalancedTree(ord)
+console.log(node2);
+prettyPrint(node2)
