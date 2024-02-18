@@ -188,6 +188,13 @@ class BinarySearchTree {
 
     height(node) {
         
+        if (node === null) return 0;
+
+        let leftNode = this.height(node.left);
+        let rightNode = this.height(node.right);
+
+        return 1 + Math.max(leftNode, rightNode);
+
     }
     
 }
@@ -221,4 +228,9 @@ console.log(node1);
 prettyPrint(node1)
 const node2 = bst.buildBalancedTree(ord)
 console.log(node2);
-prettyPrint(node2)
+prettyPrint(node2);
+let f = bst.find(4);
+console.log(f);
+prettyPrint(f);
+console.log(bst.height(node1))
+console.log(bst.height(f))
