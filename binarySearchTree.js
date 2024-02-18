@@ -234,6 +234,13 @@ class BinarySearchTree {
 
         return leftNodeHeight === rightNodeHeight ? true : false;
     }
+
+    reBalance(node) {
+        if (this.isBalanced(node)) return node;
+        let array = this.inOrder(node);
+        node = this.buildBalancedTree(array);
+        return node;
+    }
     
 }
 
@@ -247,21 +254,25 @@ bst.insert(6)
 bst.insert(25)
 bst.prettyPrint(node)
 
-const ord = bst.inOrder(node);
-console.log(ord);
-const node1 = bst.buildTree(ord)
-console.log(node1);
-bst.prettyPrint(node1)
-const node2 = bst.buildBalancedTree(ord)
-console.log(node2);
-bst.prettyPrint(node2)
-let f = bst.find(4);
-console.log(f);
-bst.prettyPrint(f)
-console.log(bst.height(node))
-console.log(bst.height(f))
-console.log(bst.depth(node))
-console.log(bst.depth(f))
-console.log(bst.isBalanced(node))
-console.log(bst.isBalanced(f))
-console.log(bst.isBalanced(node2))
+console.log(`isBalanced: ${bst.isBalanced(node)}`);
+let newNode = bst.reBalance(node);
+console.log(`isBalanced: ${bst.isBalanced(newNode)}`);
+
+// const ord = bst.inOrder(node);
+// console.log(ord);
+// const node1 = bst.buildTree(ord)
+// console.log(node1);
+// bst.prettyPrint(node1)
+// const node2 = bst.buildBalancedTree(ord)
+// console.log(node2);
+// bst.prettyPrint(node2)
+// let f = bst.find(4);
+// console.log(f);
+// bst.prettyPrint(f)
+// console.log(bst.height(node))
+// console.log(bst.height(f))
+// console.log(bst.depth(node))
+// console.log(bst.depth(f))
+// console.log(bst.isBalanced(node))
+// console.log(bst.isBalanced(f))
+// console.log(bst.isBalanced(node2))
