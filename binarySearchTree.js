@@ -110,6 +110,19 @@ class BinarySearchTree {
         }
     }
 
+    prettyPrint(node, prefix = "", isLeft = true) {
+        if (node === null) {
+          return;
+        }
+        if (node.right !== null) {
+          this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+        }
+        console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+        if (node.left !== null) {
+          this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+        }
+    }
+
     delete(value) {
         let arr = this.preOrder(this.root);
         this.root = null;
@@ -123,7 +136,7 @@ class BinarySearchTree {
 
     find(value) {
 
-        if (this.root === null) return null
+        // if (this.root === null) return null
         let valueNode;
         let currentNode = this.root;
         if (currentNode.data === value) return valueNode = currentNode;
@@ -196,21 +209,34 @@ class BinarySearchTree {
         return 1 + Math.max(leftNode, rightNode);
 
     }
+
+    depth(node) {
+        if (!this.root || !node) return null;
+
+        let queue = [{ currentNode: this.root, depth: 0 }];
+        // console.log(this.root)
+        while (queue.length > 0) {
+            let { currentNode, depth } = queue.shift();
+            // console.log(currentNode, depth)
+            if (node === currentNode) return depth;
+            // console.log(currentNode, depth)
+            if (currentNode.left) queue.push({currentNode: currentNode.left, depth: depth + 1});
+            if (currentNode.right) queue.push({currentNode: currentNode.right, depth: depth + 1})
+        }
+        return null;
+    }
+
+    isBalanced(node) {
+        if (node === null) return null;
+
+        let leftNodeHeight = this.height(node.left);
+        let rightNodeHeight = this.height(node.right);
+
+        return leftNodeHeight === rightNodeHeight ? true : false;
+    }
     
 }
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-    if (node === null) {
-      return;
-    }
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
-};
 
 const bst = new BinarySearchTree();
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -219,18 +245,23 @@ bst.insert(50)
 bst.insert(0)
 bst.insert(6)
 bst.insert(25)
-prettyPrint(node)
+bst.prettyPrint(node)
 
 const ord = bst.inOrder(node);
 console.log(ord);
 const node1 = bst.buildTree(ord)
 console.log(node1);
-prettyPrint(node1)
+bst.prettyPrint(node1)
 const node2 = bst.buildBalancedTree(ord)
 console.log(node2);
-prettyPrint(node2);
+bst.prettyPrint(node2)
 let f = bst.find(4);
 console.log(f);
-prettyPrint(f);
-console.log(bst.height(node1))
+bst.prettyPrint(f)
+console.log(bst.height(node))
 console.log(bst.height(f))
+console.log(bst.depth(node))
+console.log(bst.depth(f))
+console.log(bst.isBalanced(node))
+console.log(bst.isBalanced(f))
+console.log(bst.isBalanced(node2))
